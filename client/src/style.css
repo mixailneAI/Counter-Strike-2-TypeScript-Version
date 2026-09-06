@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+  background: #0a0a0a;
+  touch-action: none;
+}
+
+#app, #gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.joystick-base {
+  @apply absolute w-32 h-32 rounded-full border-2 border-white/30 bg-black/20;
+}
+
+.joystick-stick {
+  @apply absolute w-14 h-14 rounded-full bg-white/60 border-2 border-white/80;
+  transform: translate(-50%, -50%);
+}
+
+.crosshair {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none;
+}
+
+.crosshair::before, .crosshair::after {
+  content: '';
+  @apply absolute bg-green-400;
+}
+
+.crosshair::before {
+  @apply w-0.5 h-6 -translate-x-1/2 -translate-y-1/2;
+  left: 50%; top: 50%;
+}
+
+.crosshair::after {
+  @apply w-6 h-0.5 -translate-x-1/2 -translate-y-1/2;
+  left: 50%; top: 50%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fade-in { animation: fadeIn 0.3s ease-out; }
+.animate-pulse-custom { animation: pulse 1s infinite; }
+
+.damage-overlay {
+  @apply fixed inset-0 pointer-events-none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(255, 0, 0, 0.3) 100%);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.damage-overlay.active { opacity: 1; }
+
+.kill-feed {
+  @apply absolute top-4 right-4 flex flex-col gap-1;
+}
+
+.kill-entry {
+  @apply px-3 py-1 bg-black/60 rounded text-sm text-white backdrop-blur-sm;
+  animation: fadeIn 0.3s ease-out;
+}
